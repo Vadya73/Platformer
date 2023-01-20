@@ -2,43 +2,46 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Hero))]
-public class HeroInputReader : MonoBehaviour
+namespace Scripts
 {
-    [SerializeField] private Hero _hero;
-
-    private HeroInputActions _inputActions;
-
-    private void Awake()
+    [RequireComponent(typeof(Hero))]
+    public class HeroInputReader : MonoBehaviour
     {
-        if (_hero == null) {_hero = GetComponent<Hero>();}
+        [SerializeField] private Hero _hero;
 
-        _inputActions = new HeroInputActions();
-        _inputActions.Hero.HorizontalMovement.performed += OnHorizontalMovement;
-        _inputActions.Hero.HorizontalMovement.canceled += OnHorizontalMovement;
+        private HeroInputActions _inputActions;
+
+        private void Awake()
+        {
+            if (_hero == null) {_hero = GetComponent<Hero>();}
+
+            _inputActions = new HeroInputActions();
+            _inputActions.Hero.HorizontalMovement.performed += OnHorizontalMovement;
+            _inputActions.Hero.HorizontalMovement.canceled += OnHorizontalMovement;
         
-        _inputActions.Hero.SaySomething.performed += OnSaySomething;
-    }
+            _inputActions.Hero.SaySomething.performed += OnSaySomething;
+        }
 
-    private void OnEnable()
-    {
-        _inputActions.Enable();
-    }
+        private void OnEnable()
+        {
+            _inputActions.Enable();
+        }
 
-    public void OnHorizontalMovement(InputAction.CallbackContext context)
-    {
-        var direction = context.ReadValue<float>();
-        _hero.SetDirection(direction);
-    }
+        public void OnHorizontalMovement(InputAction.CallbackContext context)
+        {
+            var direction = context.ReadValue<float>();
+            _hero.SetDirection(direction);
+        }
 
-    public void OnVerticalMovement(InputAction.CallbackContext context)
-    {
-        var direction = context.ReadValue<float>();
-        _hero.SetDirection(direction);
-    }
+        public void OnVerticalMovement(InputAction.CallbackContext context)
+        {
+            var direction = context.ReadValue<float>();
+            _hero.SetDirection(direction);
+        }
 
-    public void OnSaySomething(InputAction.CallbackContext context)
-    {
+        public void OnSaySomething(InputAction.CallbackContext context)
+        {
             _hero.SaySomething();
+        }
     }
 }
