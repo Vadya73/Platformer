@@ -1,9 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LayerCheck : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundLayer;
+    
     private Collider2D _collider;
 
     public bool isTouchingLayer;

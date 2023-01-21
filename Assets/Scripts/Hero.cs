@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts
 {
@@ -8,10 +7,10 @@ namespace Scripts
         [SerializeField] private float _speed;
         [SerializeField] private float _jumpForce;
         
-        [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private float _groundCheckRadius;
-        [SerializeField] private Vector3 _groundCheckPositiondelta;
-        // [SerializeField] private LayerCheck _groundCheck; //GroundCheck with circle collider
+        [SerializeField] private Vector3 _groundCheckPositionDelta;
+        [SerializeField] private LayerMask _groundLayer;
+        // [SerializeField] private LayerCheck _groundCheck; // GroundCheck with circle collider
         
         private Vector2 _direction;
         private Rigidbody2D _rigidbody;
@@ -27,10 +26,9 @@ namespace Scripts
             var isJumping = _direction.y > 0;
             if (isJumping)
             {
-                if (IsGrounded())
+                if (IsGrounded() && _rigidbody.velocity.y <= 0.1f)
                 {
                     _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-
                 }
             } 
             else if (_rigidbody.velocity.y > 0 )
@@ -51,9 +49,9 @@ namespace Scripts
 
         private bool IsGrounded()
         {
-            // return _groundCheck.isTouchingLayer; //GroundCheck with circle collider
+            // return _groundCheck.isTouchingLayer; // GroundCheck with circle collider
 
-             var hit = Physics2D.CircleCast(transform.position + _groundCheckPositiondelta, 
+             var hit = Physics2D.CircleCast(transform.position + _groundCheckPositionDelta, 
                  _groundCheckRadius,Vector2.down,0,  _groundLayer);
 
              return hit.collider != null;
@@ -62,7 +60,7 @@ namespace Scripts
         private void OnDrawGizmos()
         {
             Gizmos.color = IsGrounded() ? Color.green : Color.red;
-            Gizmos.DrawSphere(transform.position + _groundCheckPositiondelta, _groundCheckRadius);
+            Gizmos.DrawSphere(transform.position + _groundCheckPositionDelta, _groundCheckRadius);
         }
     }
 
