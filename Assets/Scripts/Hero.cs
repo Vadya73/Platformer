@@ -14,9 +14,17 @@ namespace Scripts
         
         private Vector2 _direction;
         private Rigidbody2D _rigidbody;
+        private Animator _animator;
+        private SpriteRenderer _sprite;
+
+        private static readonly int IsGroundKey = Animator.StringToHash("is-ground");
+        private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
+        private static readonly int IsRunningKey = Animator.StringToHash("is-running");
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
+            _sprite = GetComponent<SpriteRenderer>();
         }
         
         private void FixedUpdate()
@@ -24,6 +32,8 @@ namespace Scripts
             _rigidbody.velocity = new Vector3(_direction.x * _speed, _rigidbody.velocity.y);
 
             var isJumping = _direction.y > 0;
+            var isGrounded = IsGrounded();
+            
             if (isJumping)
             {
                 if (IsGrounded() && _rigidbody.velocity.y <= 0.1f)
@@ -34,6 +44,25 @@ namespace Scripts
             else if (_rigidbody.velocity.y > 0 )
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _rigidbody.velocity.y * 0.5f);
+            }
+
+            UpdateSpriteDirection();
+
+             
+            _animator.SetBool(IsGroundKey, isGrounded);
+            _animator.SetFloat(VerticalVelocityKey, _rigidbody.velocity.y);
+            _animator.SetBool(IsRunningKey, _direction.x != 0);
+        }
+
+        private void UpdateSpriteDirection()
+        {
+            if (_direction.x > 0)
+            {
+                _sprite.flipX = false;
+            }
+            else if (_direction.x < 0)
+            {
+                _sprite.flipX = true;
             }
         }
 

@@ -2860,8 +2860,8 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3192,6 +3192,7 @@ GameObject:
   - component: {fileID: 1355260240}
   - component: {fileID: 1355260239}
   - component: {fileID: 1355260238}
+  - component: {fileID: 1355260241}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3238,7 +3239,7 @@ SpriteRenderer:
   m_SortingLayerID: 1896189379
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6146700129834819302, guid: 537813d573a276e409d6533195df24ab,
+  m_Sprite: {fileID: -427404151018760640, guid: f3973c4e5bb7f324fac3b75cd61cf157,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3329,7 +3330,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 114a580d1911d6c498151f2f092a10ea, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -3395,6 +3396,25 @@ MonoBehaviour:
   m_DefaultActionMap: Hero
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &1355260241
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355260233}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5eaa345062ded8048b6b5a2631039062, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1425816308
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,6 +3428,7 @@ GameObject:
   - component: {fileID: 1425816309}
   - component: {fileID: 1425816313}
   - component: {fileID: 1425816312}
+  - component: {fileID: 1425816314}
   m_Layer: 0
   m_Name: Coins_0
   m_TagString: Untagged
@@ -3492,7 +3513,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1588939478}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3525,9 +3547,20 @@ MonoBehaviour:
   _action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1425816312}
-        m_MethodName: DestroyObject
-        m_Mode: 1
+      - m_Target: {fileID: 1425816308}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1588939476}
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3536,6 +3569,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1425816314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425816308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f81cd6c7439e95346853426b94fe8428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frameRate: 10
+  _loop: 1
+  _sprites:
+  - {fileID: -2322180950842035098, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  - {fileID: -4893972260818282012, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  - {fileID: -6323751108524238166, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  - {fileID: 2722280177590742205, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  _onComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1447623040
 GameObject:
   m_ObjectHideFlags: 3
@@ -3652,6 +3707,121 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1588939475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1588939478}
+  - component: {fileID: 1588939476}
+  - component: {fileID: 1588939477}
+  m_Layer: 0
+  m_Name: Destroy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &1588939476
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588939475}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1588939477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588939475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f81cd6c7439e95346853426b94fe8428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frameRate: 10
+  _loop: 1
+  _sprites:
+  - {fileID: -4986890610287934012, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  - {fileID: 6143208460787649835, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  - {fileID: 7609282858266732271, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  - {fileID: -6288512792030432889, guid: f2fbcd8fc038b704286e7e962daf97f0, type: 3}
+  _onComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1425816312}
+        m_MethodName: DestroyObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &1588939478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588939475}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1425816311}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1601594672
 GameObject:
@@ -3871,14 +4041,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.24854901, y: 0.31536895}
+    - - {x: -0.24886197, y: 0.29936725}
       - {x: -0.3740218, y: 0.12402183}
       - {x: -0.37594536, y: -0.27878803}
-      - {x: -0.25192362, y: -0.46777183}
-      - {x: 0.22350985, y: -0.471619}
+      - {x: -0.24817461, y: -0.4476288}
+      - {x: 0.21690172, y: -0.4495699}
       - {x: 0.35384554, y: -0.2826814}
       - {x: 0.3446955, y: 0.12881434}
-      - {x: 0.22303706, y: 0.3134454}
+      - {x: 0.21626091, y: 0.30051893}
 --- !u!212 &1616245515
 SpriteRenderer:
   m_ObjectHideFlags: 0
