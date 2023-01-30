@@ -1,4 +1,5 @@
 ﻿using System;
+using Scripts.Components;
 using UnityEngine;
 
 namespace Scripts
@@ -7,6 +8,12 @@ namespace Scripts
     {
         [SerializeField] private float _speed;
         [SerializeField] private float _jumpForce;
+        [SerializeField] private float _damageJumpForce;
+        
+        [SerializeField] private float _interactionRadius;
+        [SerializeField] private LayerMask _interactionLayer;
+        [SerializeField] private Vector3 _InteractionPositionDelta;
+
         
         [SerializeField] private float _groundCheckRadius;
         [SerializeField] private Vector3 _groundCheckPositionDelta;
@@ -20,11 +27,14 @@ namespace Scripts
         private Rigidbody2D _rigidbody;
         private Animator _animator;
         private SpriteRenderer _sprite;
+        private Collider2D[] _interactionResult = new Collider2D[1];
+
 
 
         private static readonly int IsGroundKey = Animator.StringToHash("is-ground");
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
         private static readonly int IsRunningKey = Animator.StringToHash("is-running");
+        private static readonly int IsHitKey = Animator.StringToHash("hit");
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -49,6 +59,28 @@ namespace Scripts
             _animator.SetBool(IsRunningKey, _direction.x != 0);
             
             UpdateSpriteDirection();
+        }
+
+        public void TakeDamage()
+        {
+            _animator.SetTrigger(IsHitKey);
+
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _damageJumpForce);
+        }
+
+        public void Interact()
+        {
+            var size = Physics2D.OverlapCircleNonAlloc(transform.position + _InteractionPositionDelta, _interactionRadius, _interactionResult, 
+                _interactionLayer);
+
+            for (int i = 0; i < size; i++)
+            {
+                var interactable = _interactionResult[i].GetComponent<InteractableComponent>();
+                if (interactable != null)
+                {
+                    interactable.Interact();
+                }
+            }
         }
 
         private float CalculateYVelocity()
@@ -116,7 +148,7 @@ namespace Scripts
 
              var hit = Physics2D.CircleCast(transform.position + _groundCheckPositionDelta, 
                  _groundCheckRadius,Vector2.down,0,  _groundLayer);
-
+             
              return hit.collider != null;
         }
 
