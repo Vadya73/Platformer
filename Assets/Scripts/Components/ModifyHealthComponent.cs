@@ -2,17 +2,17 @@
 
 namespace Scripts.Components
 {
-    public class ChangeHealthComponent : MonoBehaviour
+    public class ModifyHealthComponent : MonoBehaviour
     {
-        [SerializeField] private int _valueToChangeHp;
+        [SerializeField] private int _hpDelta;
 
-        public void ApplyDamage (GameObject target)
+        public void Apply (GameObject target)
         {
             var healthComponent = target.GetComponent<HealthComponent>();
 
             if (healthComponent != null)
             {
-                healthComponent.ApplyHealthChange(_valueToChangeHp);
+                healthComponent.ModifyHealth(_hpDelta);
             }
         }
     }

@@ -1,33 +1,45 @@
 ﻿using System;
 using Scripts.Components;
+using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts
 {
     public class Hero : MonoBehaviour
     {
+        [Header("Character stats")]
         [SerializeField] private float _speed;
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _damageJumpForce;
-        
-        [SerializeField] private float _interactionRadius;
-        [SerializeField] private LayerMask _interactionLayer;
-        [SerializeField] private Vector3 _InteractionPositionDelta;
+        [SerializeField] private float _slamDownVelocity;
 
-        
+        [Space] [Header("Ground Check")]
         [SerializeField] private float _groundCheckRadius;
         [SerializeField] private Vector3 _groundCheckPositionDelta;
         [SerializeField] private LayerMask _groundLayer;
-        // [SerializeField] private LayerCheck _groundCheck; // GroundCheck with circle collider
+        // [SerializeField] private LayerCheck _groundCheck; // GroundCheck with collider
+        
+        [Space] [Header("Particles")]
+        [SerializeField] private ParticleSystem _hitParticles;
+        [SerializeField] private SpawnComponent _footParticles;
+        [SerializeField] private SpawnComponent _jumpParticles;
+        [SerializeField] private SpawnComponent _slamDownParticles;
+
+        [Space] [Header("Others")]
+        [SerializeField] private float _interactionRadius;
+        [SerializeField] private LayerMask _interactionLayer;
+        [SerializeField] private Vector3 _InteractionPositionDelta;
         
         private bool _isGrounded;
         private bool _allowDoubleJump;
+
+        private int _coins;
         
         private Vector2 _direction;
         private Rigidbody2D _rigidbody;
         private Animator _animator;
-        private SpriteRenderer _sprite;
         private Collider2D[] _interactionResult = new Collider2D[1];
+        
 
 
 
@@ -39,7 +51,6 @@ namespace Scripts
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _sprite = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
@@ -64,8 +75,24 @@ namespace Scripts
         public void TakeDamage()
         {
             _animator.SetTrigger(IsHitKey);
-
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _damageJumpForce);
+            if (_coins > 0)
+            {
+                SpawnParticleCoins();
+            }
+        }
+
+        private void SpawnParticleCoins()
+        {
+            var numCoinsToDispose = Mathf.Min(_coins, 5);
+            _coins -= numCoinsToDispose;
+
+            var burst = _hitParticles.emission.GetBurst(0);
+            burst.count = numCoinsToDispose;
+            _hitParticles.emission.SetBurst(0, burst);
+
+            _hitParticles.gameObject.SetActive(true);
+            _hitParticles.Play();   
         }
 
         public void Interact()
@@ -110,11 +137,13 @@ namespace Scripts
             if (_isGrounded)
             {
                 yVelocity += _jumpForce;
+                _jumpParticles.Spawn();
             }
             else if (_allowDoubleJump)
             {
                 yVelocity = _jumpForce;
                 _allowDoubleJump = false;
+                _jumpParticles.Spawn();
             }
 
             return yVelocity;
@@ -124,11 +153,11 @@ namespace Scripts
         {
             if (_direction.x > 0)
             {
-                _sprite.flipX = false;
+                transform.localScale = Vector3.one;
             }
             else if (_direction.x < 0)
             {
-                _sprite.flipX = true;
+                transform.localScale = new Vector3(-1, 1, 1);
             }
         }
 
@@ -156,6 +185,29 @@ namespace Scripts
         {
             Gizmos.color = IsGrounded() ? Color.green : Color.red;
             Gizmos.DrawSphere(transform.position + _groundCheckPositionDelta, _groundCheckRadius);
+        }
+
+        public void SpawnFootDust()
+        {
+            _footParticles.Spawn();
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.IsInLayer(_groundLayer))
+            {
+                var contact = other.contacts[0];
+                if (contact.relativeVelocity.y >= _slamDownVelocity)
+                {
+                    _slamDownParticles.Spawn();
+                }
+            }
+        }
+
+        public void AddCoin()
+        {
+            _coins++;
+            Debug.Log(_coins);
         }
     }
 

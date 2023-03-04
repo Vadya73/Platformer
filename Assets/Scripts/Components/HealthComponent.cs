@@ -10,10 +10,10 @@ namespace Scripts.Components
         [SerializeField] private UnityEvent _onHeal;
         [SerializeField] private UnityEvent _onDie;
 
-        public void ApplyHealthChange(int value)
+        public void ModifyHealth(int healthDelta)
         {
             var currentHealth = _health;
-            _health += value;
+            _health += healthDelta;
             if (currentHealth > _health)
             {
                 _onDamage?.Invoke();

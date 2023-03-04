@@ -1,15 +1,13 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace Scripts
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class SpriteAnimation : MonoBehaviour
     {
-        [SerializeField] [Range(10, 30)] private int _frameRate = 10;
+        [SerializeField] [Range(1, 30)] private int _frameRate = 10;
         [SerializeField] private UnityEvent<string> _onComplete;
         [SerializeField] private AnimationClip[] _clips;
 
@@ -19,16 +17,11 @@ namespace Scripts
         private float _nextFrameTime;
         private int _currentFrame;
         private bool _isPlaying = true;
-
         private int _currentClip;
-
-        private void Awake()
-        {
-            _renderer = GetComponent<SpriteRenderer>();
-        }
-
+        
         private void Start()
         {
+            _renderer = GetComponent<SpriteRenderer>();
             _secondsPerFrame = 1f / _frameRate;
 
             StartAnimation();
@@ -55,12 +48,14 @@ namespace Scripts
                     return;
                 }
             }
+
+            enabled = _isPlaying = false;
         }
 
         private void StartAnimation()
         {
             _nextFrameTime = Time.time + _secondsPerFrame;
-            _isPlaying = true;
+            enabled = _isPlaying = true;
             _currentFrame = 0;
         }
 
@@ -78,17 +73,17 @@ namespace Scripts
             {
                 if (clip.Loop)
                 {
-                    _currentClip = 0;
+                    _currentFrame = 0;
                 }
                 else
                 {
+                    enabled = _isPlaying = clip.AllowNextClip;
                     clip.OnComplete?.Invoke();
                     _onComplete?.Invoke(clip.Name);
-                    enabled = _isPlaying = clip.AllowNextClip;
                     if (clip.AllowNextClip)
                     {
                         _currentFrame = 0;
-                        _currentClip = (int)Mathf.Repeat(_currentClip + 1, _clips.Length);
+                        _currentClip = (int) Mathf.Repeat(_currentClip + 1, _clips.Length);
                     }
                 }
                 
