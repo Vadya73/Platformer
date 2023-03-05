@@ -1,6 +1,7 @@
-﻿using System;
-using Scripts.Components;
+﻿using Scripts.Components;
 using Scripts.Utils;
+using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Scripts
@@ -8,6 +9,7 @@ namespace Scripts
     public class Hero : MonoBehaviour
     {
         [Header("Character stats")]
+        [SerializeField] private int _damage;
         [SerializeField] private float _speed;
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _damageJumpForce;
@@ -30,8 +32,14 @@ namespace Scripts
         [SerializeField] private LayerMask _interactionLayer;
         [SerializeField] private Vector3 _InteractionPositionDelta;
         
+        [SerializeField] private AnimatorController _armed;
+        [SerializeField] private AnimatorController _disArmed;
+
+        [SerializeField] private CheckCircleOverlap _attackRange;
+        
         private bool _isGrounded;
         private bool _allowDoubleJump;
+        private bool _isArmed;
 
         private int _coins;
         
@@ -47,6 +55,8 @@ namespace Scripts
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
         private static readonly int IsRunningKey = Animator.StringToHash("is-running");
         private static readonly int IsHitKey = Animator.StringToHash("hit");
+        private static readonly int IsAttackKey = Animator.StringToHash("attack");
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -97,7 +107,9 @@ namespace Scripts
 
         public void Interact()
         {
-            var size = Physics2D.OverlapCircleNonAlloc(transform.position + _InteractionPositionDelta, _interactionRadius, _interactionResult, 
+            var size = Physics2D.OverlapCircleNonAlloc(transform.position + _InteractionPositionDelta, 
+                    _interactionRadius,
+                    _interactionResult, 
                 _interactionLayer);
 
             for (int i = 0; i < size; i++)
@@ -181,11 +193,13 @@ namespace Scripts
              return hit.collider != null;
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            Gizmos.color = IsGrounded() ? Color.green : Color.red;
-            Gizmos.DrawSphere(transform.position + _groundCheckPositionDelta, _groundCheckRadius);
+            Handles.color = IsGrounded() ? HandlesUtils.TransparentGreen : HandlesUtils.TransparentRed;
+            Handles.DrawSolidDisc(transform.position + _groundCheckPositionDelta,Vector3.forward, _groundCheckRadius);
         }
+#endif
 
         public void SpawnFootDust()
         {
@@ -208,6 +222,32 @@ namespace Scripts
         {
             _coins++;
             Debug.Log(_coins);
+        }
+
+        public void Attack()
+        {
+            if (!_isArmed) return;
+            
+            _animator.SetTrigger(IsAttackKey);
+        }
+
+        public void OnAttack()
+        {
+            var gos = _attackRange.GetObjectsInRange();
+            foreach (var go in gos)
+            {
+                var hp = go.GetComponent<HealthComponent>();
+                if (hp != null && go.CompareTag("Enemy"))
+                {
+                    hp.ModifyHealth(_damage);
+                }
+            }
+        }
+
+        public void ArmHero()
+        {
+            _isArmed = true;
+            _animator.runtimeAnimatorController = _armed;
         }
     }
 
