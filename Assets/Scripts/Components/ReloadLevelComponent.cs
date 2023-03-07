@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.Model;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Scripts.Components
@@ -7,6 +8,8 @@ namespace Scripts.Components
     {
         public void Reload()
         {
+            var session = FindObjectOfType<GameSession>();
+            DestroyImmediate(session);
             var currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.name);
         }

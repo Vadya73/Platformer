@@ -1,4 +1,5 @@
 ﻿using Scripts.Components;
+using Scripts.Model;
 using Scripts.Utils;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -14,6 +15,7 @@ namespace Scripts
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _damageJumpForce;
         [SerializeField] private float _slamDownVelocity;
+        [SerializeField] private float _damageVelocity;
 
         [Space] [Header("Ground Check")]
         [SerializeField] private float _groundCheckRadius;
@@ -33,23 +35,18 @@ namespace Scripts
         [SerializeField] private Vector3 _InteractionPositionDelta;
         
         [SerializeField] private AnimatorController _armed;
-        [SerializeField] private AnimatorController _disArmed;
+        [SerializeField] private AnimatorController _disArёmed;
 
         [SerializeField] private CheckCircleOverlap _attackRange;
         
         private bool _isGrounded;
         private bool _allowDoubleJump;
-        private bool _isArmed;
 
-        private int _coins;
-        
         private Vector2 _direction;
         private Rigidbody2D _rigidbody;
         private Animator _animator;
         private Collider2D[] _interactionResult = new Collider2D[1];
-        
-
-
+        private GameSession _session;
 
         private static readonly int IsGroundKey = Animator.StringToHash("is-ground");
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
@@ -61,6 +58,15 @@ namespace Scripts
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+        }
+
+        private void Start()
+        {
+            _session = FindObjectOfType<GameSession>();
+            var health = GetComponent<HealthComponent>();
+            
+            health.SetHealth(_session.Data.Health);
+            UpdateHeroWeapon();
         }
 
         private void Update()
@@ -81,12 +87,13 @@ namespace Scripts
             
             UpdateSpriteDirection();
         }
+        
 
         public void TakeDamage()
         {
             _animator.SetTrigger(IsHitKey);
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _damageJumpForce);
-            if (_coins > 0)
+            if (_session.Data.Coins > 0)
             {
                 SpawnParticleCoins();
             }
@@ -94,8 +101,8 @@ namespace Scripts
 
         private void SpawnParticleCoins()
         {
-            var numCoinsToDispose = Mathf.Min(_coins, 5);
-            _coins -= numCoinsToDispose;
+            var numCoinsToDispose = Mathf.Min(_session.Data.Coins, 5);
+            _session.Data.Coins -= numCoinsToDispose;
 
             var burst = _hitParticles.emission.GetBurst(0);
             burst.count = numCoinsToDispose;
@@ -218,20 +225,20 @@ namespace Scripts
             }
         }
 
-        public void AddCoin()
+        public void AddCoin(int coins)
         {
-            _coins++;
-            Debug.Log(_coins);
+            _session.Data.Coins += coins;
+            Debug.Log(_session.Data.Coins);
         }
 
         public void Attack()
         {
-            if (!_isArmed) return;
+            if (!_session.Data.IsArmed) return;
             
             _animator.SetTrigger(IsAttackKey);
         }
 
-        public void OnAttack()
+        public void OnDoAttack()
         {
             var gos = _attackRange.GetObjectsInRange();
             foreach (var go in gos)
@@ -246,8 +253,13 @@ namespace Scripts
 
         public void ArmHero()
         {
-            _isArmed = true;
-            _animator.runtimeAnimatorController = _armed;
+            _session.Data.IsArmed = true;
+            UpdateHeroWeapon();
+        }
+
+        private void UpdateHeroWeapon()
+        {
+            _animator.runtimeAnimatorController = _session.Data.IsArmed ? _armed : _disArёmed;
         }
     }
 
