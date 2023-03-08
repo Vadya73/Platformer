@@ -14,14 +14,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "SaySomething",
-                    "type": "Button",
-                    "id": "f48d9fca-cbf8-4786-bf06-1ba7a6e16faf",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "3d43a62b-3b28-4b4c-a31e-6acdf60694d3",
@@ -148,17 +140,6 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "70beef94-6b0d-46bc-b396-22765b340af8",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SaySomething",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

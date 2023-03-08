@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6694446107092197617}
   - component: {fileID: 1445124596182265453}
   - component: {fileID: 627123581}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DestructableBarrel
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -274,6 +274,9 @@ MonoBehaviour:
           m_StringArgument: destroy
           m_BoolArgument: 0
         m_CallState: 2
+  _onChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &627123581
 MonoBehaviour:
   m_ObjectHideFlags: 0

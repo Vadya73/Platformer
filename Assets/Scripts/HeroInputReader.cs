@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.Creatures;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Scripts
@@ -19,11 +20,6 @@ namespace Scripts
             _hero.SetDirection(direction);
         }
         
-        public void OnSaySomething(InputAction.CallbackContext context)
-        {
-            _hero.SaySomething();
-        }
-
         public void OnInteract(InputAction.CallbackContext context)
         {
             if (context.canceled)

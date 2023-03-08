@@ -1,4 +1,5 @@
-﻿using Scripts.Model;
+﻿using System.Security.Cryptography;
+using Scripts.Model;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +10,7 @@ namespace Scripts.Components
         public void Reload()
         {
             var session = FindObjectOfType<GameSession>();
-            DestroyImmediate(session);
+            Destroy(session);
             var currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.name);
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace Scripts.Model
@@ -12,11 +13,11 @@ namespace Scripts.Model
         {
             if (IsSessionExit())
             {
-                DestroyImmediate(gameObject);
+                Destroy(gameObject);
             }
             else
             {
-                DontDestroyOnLoad(this);
+                Destroy(this); 
             }
         }
 
