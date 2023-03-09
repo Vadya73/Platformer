@@ -118,15 +118,7 @@ namespace Scripts.Creatures
         
         public void OnDoAttack()
         {
-            var gos = _attackRange.GetObjectsInRange();
-            foreach (var go in gos)
-            {
-                var hp = go.GetComponent<HealthComponent>();
-                if (hp != null && go.CompareTag("Enemy"))
-                {
-                    hp.ModifyHealth(_damage);
-                }
-            }
+            _attackRange.Check();
         }
     }
 }

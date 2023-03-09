@@ -21,13 +21,14 @@ namespace Scripts.Creatures
         [SerializeField] private AnimatorController _armed;
         [SerializeField] private AnimatorController _disArmed;
         [SerializeField] private LayerCheck _wallCheck;
+        [SerializeField] private CheckCircleOverlap _interactionCheck;
+
 
         
         private bool _allowDoubleJump;
         private bool _isOnWall;
         private float _defaultGravityScale;
         
-        private Collider2D[] _interactionResult = new Collider2D[1];
         private GameSession _session;
 
         protected override void Awake()
@@ -85,19 +86,7 @@ namespace Scripts.Creatures
 
         public void Interact()
         {
-            var size = Physics2D.OverlapCircleNonAlloc(transform.position + _InteractionPositionDelta, 
-                    _interactionRadius,
-                    _interactionResult, 
-                _interactionLayer);
-
-            for (int i = 0; i < size; i++)
-            {
-                var interactable = _interactionResult[i].GetComponent<InteractableComponent>();
-                if (interactable != null)
-                {
-                    interactable.Interact();
-                }
-            }
+            _interactionCheck.Check();
         }
 
         protected override float CalculateYVelocity()
