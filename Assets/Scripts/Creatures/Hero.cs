@@ -1,7 +1,6 @@
 ﻿using Scripts.Components;
 using Scripts.Model;
 using Scripts.Utils;
-using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -155,5 +154,4 @@ namespace Scripts.Creatures
             Animator.runtimeAnimatorController = _session.Data.IsArmed ? _armed : _disArmed;
         }
     }
-
 }

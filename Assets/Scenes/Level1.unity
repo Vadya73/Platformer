@@ -11091,21 +11091,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero
       objectReference: {fileID: 0}
-    - target: {fileID: 3248057106441464870, guid: 1c4c351f80016eb49a5a0378fc5d3aa5,
-        type: 3}
-      propertyPath: _damageVelocity
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 3248057106441464889, guid: 1c4c351f80016eb49a5a0378fc5d3aa5,
         type: 3}
       propertyPath: _onDie.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1725065906}
-    - target: {fileID: 9105196298117457249, guid: 1c4c351f80016eb49a5a0378fc5d3aa5,
-        type: 3}
-      propertyPath: _layer.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c4c351f80016eb49a5a0378fc5d3aa5, type: 3}
 --- !u!1001 &3955968875868040970
