@@ -1,6 +1,7 @@
 ﻿using Scripts.Components;
 using Scripts.Model;
 using Scripts.Utils;
+using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -21,14 +22,15 @@ namespace Scripts.Creatures
         [SerializeField] private AnimatorController _disArmed;
         [SerializeField] private LayerCheck _wallCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
-
-
+        [SerializeField] private Cooldown _throwCooldown;
         
         private bool _allowDoubleJump;
         private bool _isOnWall;
         private float _defaultGravityScale;
         
         private GameSession _session;
+
+        private static readonly int IsThrowKey = Animator.StringToHash("throw");
 
         protected override void Awake()
         {
@@ -49,7 +51,7 @@ namespace Scripts.Creatures
         {
             base.Update();
             
-            if (_wallCheck.isTouchingLayer && Direction.x == transform.localScale.x)
+            if (_wallCheck.IsTouchingLayer && Direction.x == transform.localScale.x)
             {
                 _isOnWall = true;
                 Rigidbody.gravityScale = 0;
@@ -152,6 +154,20 @@ namespace Scripts.Creatures
         private void UpdateHeroWeapon()
         {
             Animator.runtimeAnimatorController = _session.Data.IsArmed ? _armed : _disArmed;
+        }
+
+        public void OnDoThrow()
+        {
+            _particles.Spawn("Throw");
+        }
+
+        public void Throw()
+        {
+            if (_throwCooldown.IsReady)
+            {
+                Animator.SetTrigger(IsThrowKey);
+                _throwCooldown.Reset();
+            }
         }
     }
 }

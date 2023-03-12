@@ -14,6 +14,8 @@ namespace Scripts.Components
 
         public void ModifyHealth(int healthDelta)
         {
+            if (_health<=0) return;
+            
             var currentHealth = _health;
             _health += healthDelta;
             _onChange?.Invoke(_health);

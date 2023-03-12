@@ -6,10 +6,9 @@ namespace Scripts
     {
         [SerializeField] private LayerMask _layer;
         [SerializeField] private bool _isTouchingLayer;
-    
         private Collider2D _collider;
 
-        public bool isTouchingLayer => _isTouchingLayer;
+        public bool IsTouchingLayer => _isTouchingLayer;
 
         private void Awake()
         {

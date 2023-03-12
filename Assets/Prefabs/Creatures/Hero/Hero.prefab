@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3248057106441464864}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3242885002543727817
 MonoBehaviour:
@@ -4881,7 +4881,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 293563969
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_RenderMode: 0
   m_SortMode: 0
@@ -4951,6 +4951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 3248057105717232457}
   _prefab: {fileID: 2595580151921845035, guid: 29c1899ef1e4c964b895aa66ffb810c8, type: 3}
+  _invertXScale: 0
 --- !u!1 &3248057106441464866
 GameObject:
   m_ObjectHideFlags: 0
@@ -4991,6 +4992,7 @@ Transform:
   - {fileID: 3248057105717232457}
   - {fileID: 3248057107642060726}
   - {fileID: 3248057107085431740}
+  - {fileID: 1581676353587885868}
   - {fileID: 3248057106816012840}
   - {fileID: 7365952954542064605}
   - {fileID: 5928598210376572430}
@@ -5035,10 +5037,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1896189379
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: -427404151018760640, guid: f3973c4e5bb7f324fac3b75cd61cf157,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: e52a43c0b5a54594b97288b15d8c9490, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5096,7 +5097,7 @@ Animator:
   m_GameObject: {fileID: 3248057106441464866}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5eaa345062ded8048b6b5a2631039062, type: 2}
+  m_Controller: {fileID: 9100000, guid: dfb86c0deaf4169449bae4802d11314c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5176,6 +5177,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 49155881-4c0c-463a-834e-0765f0ceca1c
     m_ActionName: Hero/Attack[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3248057106441464871}
+        m_MethodName: OnThrow
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a1cd8ea4-a8ac-4d13-9de9-be09eb98311e
+    m_ActionName: Hero/Throw[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Hero
@@ -5210,6 +5226,7 @@ MonoBehaviour:
   _jumpForce: 10
   _damageVelocity: 15
   _damage: -10
+  _invertScale: 0
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -5227,6 +5244,8 @@ MonoBehaviour:
   _disArmed: {fileID: 9100000, guid: 5eaa345062ded8048b6b5a2631039062, type: 2}
   _wallCheck: {fileID: 8430164338281864290}
   _interactionCheck: {fileID: 3242885002543727817}
+  _throwCooldown:
+    _value: 1
 --- !u!114 &3248057106441464889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5304,6 +5323,8 @@ MonoBehaviour:
     Component: {fileID: 3248057107642060725}
   - Id: SlamDown
     Component: {fileID: 3248057107085431741}
+  - Id: Throw
+    Component: {fileID: 3302349298839759184}
 --- !u!1 &3248057106816012842
 GameObject:
   m_ObjectHideFlags: 0
@@ -5334,7 +5355,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3248057106441464864}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3248057106816012841
 MonoBehaviour:
@@ -5426,6 +5447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 3248057107085431740}
   _prefab: {fileID: 2595580151921845035, guid: d417be61f1270f340a50f7d704fd27c0, type: 3}
+  _invertXScale: 0
 --- !u!1 &3248057107642060727
 GameObject:
   m_ObjectHideFlags: 0
@@ -5471,6 +5493,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 3248057107642060726}
   _prefab: {fileID: 2595580151921845035, guid: 201f80f7ff6781149b96a84289c9c5e2, type: 3}
+  _invertXScale: 0
+--- !u!1 &3251236085890423689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1581676353587885868}
+  - component: {fileID: 3302349298839759184}
+  m_Layer: 12
+  m_Name: ThrowSwordSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1581676353587885868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251236085890423689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.538, y: 0.327, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3248057106441464864}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3302349298839759184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251236085890423689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3fa0e661759c524e82ad03dda7c7284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 1581676353587885868}
+  _prefab: {fileID: 2595580151921845035, guid: 80d86cd0697b33443a8c89a8350f04ca, type: 3}
+  _invertXScale: 0
 --- !u!1 &6317507565289516692
 GameObject:
   m_ObjectHideFlags: 0
@@ -5501,7 +5570,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3248057106441464864}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8430164338281864290
 MonoBehaviour:
@@ -5565,7 +5634,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3248057106441464864}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1920621109302612916
 CircleCollider2D:
