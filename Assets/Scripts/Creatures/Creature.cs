@@ -121,6 +121,7 @@ namespace Scripts.Creatures
         public void OnDoAttack()
         {
             _attackRange.Check();
+            _particles.Spawn("Slash");
         }
     }
 }
