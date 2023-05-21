@@ -7,6 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2438885012606853965, guid: 942e4860bd77cb148a216f88e684b749,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2438885012606853965, guid: 942e4860bd77cb148a216f88e684b749,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903660105965088138, guid: 942e4860bd77cb148a216f88e684b749,
+        type: 3}
+      propertyPath: _count
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8206994755669677360, guid: 942e4860bd77cb148a216f88e684b749,
         type: 3}
       propertyPath: _clips.Array.data[0]._sprites.Array.size

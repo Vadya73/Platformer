@@ -10,7 +10,16 @@ namespace Scripts.Components
         [SerializeField] private int _count;
         [SerializeField] private DropData[] _drop;
         [SerializeField] private DropEvent _onDropCalculated;
-        
+        [SerializeField] private bool _spawnOnEnable;
+
+        private void OnEnable()
+        {
+            if (_spawnOnEnable)
+            {
+                CalculateDrop();
+            }
+        }
+
         [ContextMenu("CalculateDrop")]
         public void CalculateDrop()
         {
@@ -22,9 +31,11 @@ namespace Scripts.Components
             while (itemCount < _count)
             {
                 var random = UnityEngine.Random.value * total;
+                var current = 0f;
                 foreach (var dropData in sortedDrop)
                 {
-                    if (dropData.Probability >= random)
+                    current += dropData.Probability;
+                    if (current >= random)
                     {
                         itemsToDrop[itemCount] = dropData.Drop;
                         itemCount++;

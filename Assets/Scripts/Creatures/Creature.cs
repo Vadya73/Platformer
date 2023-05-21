@@ -1,4 +1,6 @@
-﻿using Scripts.Components;
+﻿using Scripts.ColliderBased;
+using Scripts.Components;
+using Scripts.Components.GoBased;
 using UnityEngine;
 
 namespace Scripts.Creatures

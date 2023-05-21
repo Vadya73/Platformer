@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using Scripts.Model.Data;
 using UnityEngine;
 
 namespace Scripts.Model
@@ -7,7 +6,9 @@ namespace Scripts.Model
     public class GameSession : MonoBehaviour
     {
         [SerializeField] private PlayerData _data;
+
         public PlayerData Data => _data;
+        private PlayerData _save;
 
         private void Awake()
         {
@@ -17,7 +18,8 @@ namespace Scripts.Model
             }
             else
             {
-                Destroy(this); 
+                Save();
+                DontDestroyOnLoad(this); 
             }
         }
 
@@ -32,6 +34,16 @@ namespace Scripts.Model
             }
 
             return false;
+        }
+
+        public void Save()
+        {
+            _save = _data.Clone();
+        }
+
+        public void LoadLastSave()
+        {
+            _data = _save.Clone();
         }
     }
 }

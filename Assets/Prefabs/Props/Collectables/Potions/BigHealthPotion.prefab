@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3206500314273247911}
   - component: {fileID: 3206500314273247905}
   - component: {fileID: 6543700421271925090}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BigHealthPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,6 +192,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: Player
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   _action:
     m_PersistentCalls:
       m_Calls:
