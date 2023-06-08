@@ -32,6 +32,7 @@ namespace Scripts.Components
             {
                 var random = UnityEngine.Random.value * total;
                 var current = 0f;
+                
                 foreach (var dropData in sortedDrop)
                 {
                     current += dropData.Probability;
@@ -57,6 +58,11 @@ namespace Scripts.Components
         [Serializable]
         public class DropEvent : UnityEvent<GameObject[]>
         {
+        }
+
+        public void SetCount(int count)
+        {
+            _count = count;
         }
     }
 }

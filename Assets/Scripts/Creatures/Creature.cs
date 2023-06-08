@@ -17,14 +17,14 @@ namespace Scripts.Creatures
         [Header("Checkers")]
         [SerializeField] protected LayerMask _groundLayer;
         [SerializeField] protected CheckCircleOverlap _attackRange;
-        [SerializeField] private LayerCheck _groundCheck ;
+        [SerializeField] private ColliderCheck _groundCheck ;
         [SerializeField] protected SpawnListComponent _particles;
         
         protected Vector2 Direction;
         protected Rigidbody2D Rigidbody;
         protected Animator Animator;
         protected bool IsGrounded;
-        private bool _isJumpig;
+        private bool  _isJumping;
 
         private static readonly int IsGroundKey = Animator.StringToHash("is-ground");
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
@@ -64,7 +64,7 @@ namespace Scripts.Creatures
 
             if (isJumpPressing)
             {
-                _isJumpig = true;
+                _isJumping = true;
                 
                 var isFalling = Rigidbody.velocity.y <= 0.001f;
                 if (!isFalling) return yVelocity;
@@ -109,7 +109,7 @@ namespace Scripts.Creatures
         
         public virtual void TakeDamage()
         {
-            _isJumpig = false;
+            _isJumping = false;
             Animator.SetTrigger(IsHitKey);
             Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, _damageVelocity);
 

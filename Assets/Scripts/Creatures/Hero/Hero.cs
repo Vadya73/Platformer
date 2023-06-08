@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Collections;
 using Scripts.ColliderBased;
+using Scripts.Components;
 using Scripts.Components.Health;
 using Scripts.Model;
 using Scripts.Utils;
@@ -13,13 +14,19 @@ namespace Scripts.Creatures.Hero
         [Header("Additional params")]
         [SerializeField] private float _slamDownVelocity;
 
-        [SerializeField] private ParticleSystem _hitParticles;
+        [SerializeField] private ProbabilityDropComponent _hitDrop;
         [SerializeField] private AnimatorController _armed;
         [SerializeField] private AnimatorController _disArmed;
-        [SerializeField] private LayerCheck _wallCheck;
+        [SerializeField] private ColliderCheck _wallCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
         [SerializeField] private Cooldown _throwCooldown;
-        
+
+        [Header("Super Throw")] 
+        [SerializeField] private int _superThrowParticles;
+        [SerializeField] private float _superThrowDelay;
+        [SerializeField] private Cooldown _superThrowCooldown;
+
+        private bool _superThrow;
         private bool _allowDoubleJump;
         private bool _isOnWall;
         private float _defaultGravityScale;
@@ -91,12 +98,8 @@ namespace Scripts.Creatures.Hero
             var numCoinsToDispose = Mathf.Min(CoinsCount, 5);
             _session.Data.Inventory.Remove("Coin", numCoinsToDispose);
 
-            var burst = _hitParticles.emission.GetBurst(0);
-            burst.count = numCoinsToDispose;
-            _hitParticles.emission.SetBurst(0, burst);
-
-            _hitParticles.gameObject.SetActive(true);
-            _hitParticles.Play();   
+            _hitDrop.SetCount(numCoinsToDispose);
+            _hitDrop.CalculateDrop();
         }
 
         public void Interact()
@@ -106,7 +109,7 @@ namespace Scripts.Creatures.Hero
 
         protected override float CalculateYVelocity()
         {
-            var yVelocity = Rigidbody.velocity.y;
+            //var yVelocity = Rigidbody.velocity.y;
             var isJumpPressing = Direction.y > 0;
 
             if (IsGrounded || _isOnWall)
@@ -165,16 +168,46 @@ namespace Scripts.Creatures.Hero
 
         public void OnDoThrow()
         {
-            _particles.Spawn("Throw");
+            if (_superThrow)
+            {
+                var numThrows = Mathf.Min(_superThrowParticles, SwordCount - 1);
+
+                StartCoroutine(DoSuperThrow(numThrows));
+            }
+            else
+                ThrowAndRemoveFromInventory();
+
+            _superThrow = false;
         }
 
-        public void Throw()
+        private IEnumerator DoSuperThrow(int numThrows)
         {
-            if (_throwCooldown.IsReady)
+            for (int i = 0; i < numThrows; i++)
             {
-                Animator.SetTrigger(IsThrowKey);
-                _throwCooldown.Reset();
+                ThrowAndRemoveFromInventory();
+                yield return new WaitForSeconds(_superThrowDelay);
             }
+        }
+
+        private void ThrowAndRemoveFromInventory()
+        {
+            _particles.Spawn("Throw");
+            _session.Data.Inventory.Remove("Sword", 1);
+        }
+        
+        public void StartThrowing()
+        {
+            _superThrowCooldown.Reset();
+        }
+
+        public void PerformThrowing()
+        {
+            if (!_throwCooldown.IsReady || SwordCount <= 1) return;
+
+            if (_superThrowCooldown.IsReady) _superThrow = true;
+            
+            Animator.SetTrigger(IsThrowKey);
+            _throwCooldown.Reset();
         }
     }
 }

@@ -8,13 +8,13 @@ namespace Scripts.Creatures.Mobs
 {
     public class MobAI : MonoBehaviour
     {
+        [SerializeField] private ColliderCheck _vision;
+        [SerializeField] private ColliderCheck _canAttack;
+        
         [SerializeField] private float _alarmDelay = 0.5f;
         [SerializeField] private float _attackCooldown = 1f;
         [SerializeField] private float _missHeroCooldown = 0.5f;
         
-        [SerializeField] private LayerCheck _vision;
-        [SerializeField] private LayerCheck _canAttack;
-
         private bool _isDead;
         
         private Coroutine _current;

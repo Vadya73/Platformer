@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 4939606550617500820}
-  _prefab: {fileID: 899266742732825145, guid: 91f03dd68c488934aa116bea3c6fd068, type: 3}
+  _prefab: {fileID: 899266742732825145, guid: 6ffef08810fcf274a89a6f9acdb7035d, type: 3}
   _invertXScale: 0
 --- !u!1 &4939606550633081032
 GameObject:
@@ -175,11 +175,11 @@ GameObject:
   - component: {fileID: 7261929011595943699}
   m_Layer: 13
   m_Name: SeaShell
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4939606551371154338
 Transform:
   m_ObjectHideFlags: 0
@@ -345,6 +345,17 @@ MonoBehaviour:
   _onDie:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7261929011595943699}
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 46861216}
         m_MethodName: DestroyObject
         m_Mode: 1
@@ -440,7 +451,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.3401765, y: 1}
+  m_Offset: {x: -3.7120953, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -451,7 +462,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.319647, y: 2}
+  m_Size: {x: 9.063484, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &4939606551418506967
 MonoBehaviour:
