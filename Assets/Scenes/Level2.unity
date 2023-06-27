@@ -370,85 +370,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c4c351f80016eb49a5a0378fc5d3aa5, type: 3}
---- !u!1 &500007334
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 500007335}
-  - component: {fileID: 500007337}
-  - component: {fileID: 500007336}
-  m_Layer: 0
-  m_Name: HitDrop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &500007335
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500007334}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 170841156}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &500007336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500007334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e047fcc37848179a04da517093be71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sectorAngle: 220
-  _sectorRotation: 0
-  _waitTime: 0.1
-  _speed: 6
---- !u!114 &500007337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500007334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51701406ee034a4c94084d7eaa2b6095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _count: 10
-  _drop:
-  - Drop: {fileID: 8206994755669677374, guid: 942e4860bd77cb148a216f88e684b749, type: 3}
-    Probability: 100
-  _onDropCalculated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 500007336}
-        m_MethodName: StartDrop
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _spawnOnEnable: 0
 --- !u!1 &510581056
 GameObject:
   m_ObjectHideFlags: 0
@@ -11305,6 +11226,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97a01acfcd34b7c4ea913c8001395afb, type: 3}
+--- !u!1 &1760688339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3248057106441464866, guid: 97a01acfcd34b7c4ea913c8001395afb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1760688338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1760688340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760688339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c104ba69114bb4a19643a5cec9a71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _source: {fileID: 0}
+  _sounds: []
 --- !u!1 &1869274383
 GameObject:
   m_ObjectHideFlags: 0

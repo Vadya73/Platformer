@@ -1,5 +1,7 @@
 ﻿using Scripts.Creatures.Hero;
+using Scripts.Model.Data;
 using Scripts.Model.Definitions;
+using Scripts.Utils;
 using UnityEngine;
 
 namespace Scripts.Components.Collectables
@@ -11,9 +13,8 @@ namespace Scripts.Components.Collectables
 
         public void Add(GameObject go)
         {
-            var hero = go.GetComponent<Hero>();
-            if (hero != null)
-                hero.AddInInventory(_id, _count);
+            var hero = go.GetInterface<ICanAddInventory>();
+            hero?.AddInInventory(_id,_count);
         }
     }
 }

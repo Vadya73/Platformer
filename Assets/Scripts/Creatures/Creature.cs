@@ -1,5 +1,6 @@
 ﻿using Scripts.ColliderBased;
 using Scripts.Components;
+using Scripts.Components.Audio;
 using Scripts.Components.GoBased;
 using UnityEngine;
 
@@ -23,8 +24,9 @@ namespace Scripts.Creatures
         protected Vector2 Direction;
         protected Rigidbody2D Rigidbody;
         protected Animator Animator;
+        protected PlaySoundsComponent Sounds;
         protected bool IsGrounded;
-        private bool  _isJumping;
+        private bool _isJumping;
 
         private static readonly int IsGroundKey = Animator.StringToHash("is-ground");
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
@@ -36,6 +38,7 @@ namespace Scripts.Creatures
         {
             Rigidbody = GetComponent<Rigidbody2D>();
             Animator = GetComponent<Animator>();
+            Sounds = GetComponent<PlaySoundsComponent>();
         }
 
         protected virtual void Update()
@@ -84,10 +87,16 @@ namespace Scripts.Creatures
             if (IsGrounded)
             {
                 yVelocity += _jumpForce;
-                _particles.Spawn("Jump");
+                DoJumpVfx();
             }
 
             return yVelocity;
+        }
+
+        protected void DoJumpVfx()
+        {
+            _particles.Spawn("Jump");
+            Sounds.Play("Jump");
         }
         public void SetDirection(Vector2 direction)
         {
@@ -124,6 +133,7 @@ namespace Scripts.Creatures
         {
             _attackRange.Check();
             _particles.Spawn("Slash");
+            Sounds.Play("Melee");
         }
     }
 }

@@ -3,13 +3,14 @@ using Scripts.ColliderBased;
 using Scripts.Components;
 using Scripts.Components.Health;
 using Scripts.Model;
+using Scripts.Model.Data;
 using Scripts.Utils;
 using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Scripts.Creatures.Hero
 {
-    public class Hero : Creature
+    public class Hero : Creature, ICanAddInventory
     {
         [Header("Additional params")]
         [SerializeField] private float _slamDownVelocity;
@@ -32,6 +33,7 @@ namespace Scripts.Creatures.Hero
         private float _defaultGravityScale;
         
         private GameSession _session;
+        private HealthComponent _health;
 
         private static readonly int IsThrowKey = Animator.StringToHash("throw");
         private static readonly int IsOnWall = Animator.StringToHash("is-on-wall");
@@ -48,10 +50,10 @@ namespace Scripts.Creatures.Hero
         private void Start()
         {
             _session = FindObjectOfType<GameSession>();
-            var health = GetComponent<HealthComponent>();
+            _health = GetComponent<HealthComponent>();
             _session.Data.Inventory.OnChanged += OnInventoryChanged;
             
-            health.SetHealth(_session.Data.Health);
+            _health.SetHealth(_session.Data.Health);
             UpdateHeroWeapon();
         }
 
@@ -129,8 +131,8 @@ namespace Scripts.Creatures.Hero
         {
             if (!IsGrounded && _allowDoubleJump && !_isOnWall)
             {
-                _particles.Spawn("Jump");
                 _allowDoubleJump = false;
+                DoJumpVfx();
                 return _jumpForce;
             }
 
@@ -191,6 +193,7 @@ namespace Scripts.Creatures.Hero
 
         private void ThrowAndRemoveFromInventory()
         {
+            Sounds.Play("Range");
             _particles.Spawn("Throw");
             _session.Data.Inventory.Remove("Sword", 1);
         }
@@ -208,6 +211,17 @@ namespace Scripts.Creatures.Hero
             
             Animator.SetTrigger(IsThrowKey);
             _throwCooldown.Reset();
+        }
+
+        public void UsePotion()
+        {
+            var potionCount = _session.Data.Inventory.Count("HealthPotion");
+
+            if (potionCount > 0)
+            {
+                _health.ModifyHealth(5);
+                _session.Data.Inventory.Remove("HealthPotion",1);
+            }
         }
     }
 }
