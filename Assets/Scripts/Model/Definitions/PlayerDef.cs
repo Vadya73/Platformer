@@ -6,6 +6,8 @@ namespace Scripts.Model.Definitions
     public class PlayerDef : ScriptableObject
     {
         [SerializeField] private int _invenotySize;
+        [SerializeField] private int _maxHealth;
         public int InventorySize => _invenotySize;
+        public int MaxHealth => _maxHealth;
     }
 }

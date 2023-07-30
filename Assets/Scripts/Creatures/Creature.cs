@@ -26,7 +26,6 @@ namespace Scripts.Creatures
         protected Animator Animator;
         protected PlaySoundsComponent Sounds;
         protected bool IsGrounded;
-        private bool _isJumping;
 
         private static readonly int IsGroundKey = Animator.StringToHash("is-ground");
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
@@ -67,8 +66,6 @@ namespace Scripts.Creatures
 
             if (isJumpPressing)
             {
-                _isJumping = true;
-                
                 var isFalling = Rigidbody.velocity.y <= 0.001f;
                 if (!isFalling) return yVelocity;
                 
@@ -118,7 +115,6 @@ namespace Scripts.Creatures
         
         public virtual void TakeDamage()
         {
-            _isJumping = false;
             Animator.SetTrigger(IsHitKey);
             Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, _damageVelocity);
 

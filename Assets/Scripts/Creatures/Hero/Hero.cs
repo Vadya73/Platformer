@@ -53,7 +53,7 @@ namespace Scripts.Creatures.Hero
             _health = GetComponent<HealthComponent>();
             _session.Data.Inventory.OnChanged += OnInventoryChanged;
             
-            _health.SetHealth(_session.Data.Health);
+            _health.SetHealth(_session.Data.Health.Value);
             UpdateHeroWeapon();
         }
 
@@ -61,6 +61,11 @@ namespace Scripts.Creatures.Hero
         {
             if (id == "Sword")
                 UpdateHeroWeapon();
+        }
+
+        public void OnHealthChanged(int currentHealth)
+        {
+            _session.Data.Health.Value = currentHealth;
         }
 
         protected override void Update()

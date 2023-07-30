@@ -10,7 +10,10 @@ namespace Scripts.UI.MainMenu
 
         public void OnShowSettings()
         {
+            var window = Resources.Load<GameObject>("UI/SettingsWindow");
+            var canvas = FindObjectOfType<Canvas>();
 
+            Instantiate(window, canvas.transform);
         }
 
         public void OnStartGame()
@@ -34,8 +37,8 @@ namespace Scripts.UI.MainMenu
 
         public override void OnCloseAnimationComplete()
         {
+            _closeAction?.Invoke();
             base.OnCloseAnimationComplete();
-            SceneManager.LoadScene("Level1");
         }
     }
 }

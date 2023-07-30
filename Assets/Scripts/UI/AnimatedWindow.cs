@@ -10,12 +10,12 @@ namespace Scripts.UI
         private static readonly int Show = Animator.StringToHash("show");
         private static readonly int Hide = Animator.StringToHash("hide");
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _animator = GetComponent<Animator>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             _animator.SetTrigger(Show);
         }
