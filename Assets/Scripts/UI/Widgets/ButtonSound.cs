@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Scripts.Components.Audio;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
 namespace Scripts.UI.Widgets
 {
@@ -11,8 +13,8 @@ namespace Scripts.UI.Widgets
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_source == null) 
-                _source = GameObject.FindWithTag("SfxAudioSource").GetComponent<AudioSource>();
+            if (_source == null)
+                _source = AudioUtils.FindSfxSource();
             
             _source.PlayOneShot(_audioClip);
         }

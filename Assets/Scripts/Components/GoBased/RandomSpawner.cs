@@ -2,6 +2,7 @@
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace Scripts.GoBased
@@ -39,7 +40,7 @@ namespace Scripts.GoBased
 
         private void Spawn(GameObject particle)
         {
-            var instance = Instantiate(particle, transform.position, quaternion.identity);
+            var instance = SpawnUtils.Spawn(particle, transform.position);
             var rigidBody = instance.GetComponent<Rigidbody2D>();
 
             var randomAngle = Random.Range(0, _sectorAngle);

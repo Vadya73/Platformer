@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -2438885012606853965}
   - component: {fileID: -6840511256732173276}
   - component: {fileID: 7903660105965088138}
+  - component: {fileID: 2694612260405512246}
   m_Layer: 14
   m_Name: SilverCoinCollision
   m_TagString: Untagged
@@ -234,6 +235,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2694612260405512246}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7903660105965088138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,3 +260,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: Coin
   _count: 1
+--- !u!114 &2694612260405512246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8206994755669677374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ec7832e652458bb6aba1fe74c97ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clip: {fileID: 8300000, guid: 14c1e8c9fb2f7de4f9d900718fc1e78a, type: 3}
